@@ -51,7 +51,7 @@ public class UserServices {
     /**
      * 
      * @param userId
-     * @param UnHashedPassword
+     * @param password UnHashedPassword
      * @throws java.lang.Exception
      * @return Null in case of invalid credentials, or User instance otherwise ,
      *         check on type before usage
@@ -65,12 +65,16 @@ public class UserServices {
                     return instructor;
                 }
             }
-        } else {
+        } else if(userId.charAt(0) == 's') {
             for (Student student : JsonHandler.students) {
                 if (student.getUserId().equals(userId) && student.getPassword().equals(hashedPassword)) {
                     return student;
                 }
             }
+        }
+        else if(Admin.authenticate(userId, password))
+        {
+            return new Admin();
         }
         return null;
     }
@@ -122,19 +126,27 @@ public class UserServices {
     }
 
     public static String getUserNameById(String userId) throws IOException {
+        User user = getUserById(userId);
+        if(user==null)
+            return "";
+        
+        return user.getName();
+    }
+    
+    public static User getUserById(String userId) throws IOException {
         if (userId.charAt(0) == 'i') {
             for (Instructor instructor : JsonHandler.instructors) {
                 if (instructor.getUserId().equals(userId)) {
-                    return instructor.getName();
+                    return instructor;
                 }
             }
         } else {
             for (Student student : JsonHandler.students) {
                 if (student.getUserId().equals(userId)) {
-                    return student.getName();
+                    return student;
                 }
             }
         }
-        return "";
+        return null;
     }
 }

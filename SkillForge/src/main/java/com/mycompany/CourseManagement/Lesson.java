@@ -8,15 +8,15 @@ import java.util.ArrayList;
 
 /**
  * Lesson entity with Quiz support
- * @author Lab8_Team
  */
 public class Lesson {
 
     private String lessonId;
     private String title;
     private String content;
+    private String quizId;
     
-    // NEW: Quiz for this lesson
+    // Quiz for this lesson
     private Quiz quiz;
 
     @JsonIgnore
@@ -30,7 +30,8 @@ public class Lesson {
         this.title = title;
         this.content = content;
         this.completed = false;
-        this.quiz = null; // Quiz can be added later
+        this.quizId = null;
+        this.quiz = null;
     }
     
     public Lesson(String title, String content, Quiz quiz) {
@@ -64,6 +65,9 @@ public class Lesson {
         return maxId + 1;
     }
 
+    /**
+     * @return the lessonId
+     */
     public String getLessonId() {
         return lessonId;
     }
@@ -96,6 +100,20 @@ public class Lesson {
      */
     public void setQuiz(Quiz quiz) {
         this.quiz = quiz;
+    }
+
+    /**
+     * @return the quizId
+     */
+    public String getQuizId() {
+        return quizId;
+    }
+
+    /**
+     * @param quizId the quizId to set
+     */
+    public void setQuizId(String quizId) {
+        this.quizId = quizId;
     }
 
     @Override

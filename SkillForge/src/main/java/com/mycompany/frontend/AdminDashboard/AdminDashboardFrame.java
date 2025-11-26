@@ -4,6 +4,9 @@
  */
 package com.mycompany.frontend.AdminDashboard;
 
+import java.awt.CardLayout;
+import java.awt.Dimension;
+
 /**
  *
  * @author Hazem
@@ -11,12 +14,25 @@ package com.mycompany.frontend.AdminDashboard;
 public class AdminDashboardFrame extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AdminDashboardFrame.class.getName());
-
+    private AdminDashboardPanel adminDashboardPanel;
+    private CardLayout cardLayout;
     /**
      * Creates new form AdminDashboardFrame
      */
     public AdminDashboardFrame() {
         initComponents();
+        setTitle("Admin Control");
+        setSize(1280,720);
+        setMinimumSize(new Dimension(1280,720));
+        setLocationRelativeTo(null);
+        cardLayout = new CardLayout();
+        setLayout(cardLayout);
+        
+        adminDashboardPanel = new AdminDashboardPanel(this);
+        add(adminDashboardPanel,"home");
+        
+        cardLayout.show(getContentPane(), "home");
+        setVisible(true);
     }
 
     /**
@@ -44,6 +60,13 @@ public class AdminDashboardFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public AdminDashboardPanel getAdminDashboardPanel() {
+        return adminDashboardPanel;
+    }
+
+    public CardLayout getCardLayout() {
+        return cardLayout;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

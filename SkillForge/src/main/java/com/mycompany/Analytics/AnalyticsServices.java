@@ -1,12 +1,12 @@
 package com.mycompany.Analytics;
 
 import com.mycompany.CourseManagement.Course;
+import com.mycompany.CourseManagement.CourseProgress;
 import com.mycompany.CourseManagement.CourseServices;
 import com.mycompany.CourseManagement.Lesson;
 import com.mycompany.JsonHandler.JsonHandler;
 import com.mycompany.QuizManagement.QuizResult;
 import com.mycompany.QuizManagement.QuizServices;
-import com.mycompany.UserAccountManagement.Enrollment;
 import com.mycompany.UserAccountManagement.Student;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -52,27 +52,32 @@ public class AnalyticsServices {
 
         for (String studentId : studentIds) {
             Student student = JsonHandler.getStudent(studentId);
-            Enrollment enrollment = getEnrollmentForCourse(student, courseId);
 
-            if (enrollment != null) {
-                // Check if student is active
-                if (!enrollment.getCompletedLessons().isEmpty()) {
+            // Skip if student not found
+            if (student == null) {
+                continue;
+            }
+
+            CourseProgress progress = student.getCourseProgress(courseId);
+
+            if (progress != null) {
+                // Check if student is active (has any lesson status)
+                if (!progress.getLessonStatus().isEmpty()) {
                     activeStudentCount++;
                 }
 
-                // Parse completion percentage
-                String completionStr = enrollment.getCompletionPercentage().replace("%", "");
-                double completion = Double.parseDouble(completionStr);
+                // Get completion percentage
+                double completion = progress.getProgressPercentage();
                 totalCompletionPercentage += completion;
 
                 // Add average score
-                if (enrollment.getAverageScore() > 0) {
-                    totalScore += enrollment.getAverageScore();
+                if (progress.getOverallScore() > 0) {
+                    totalScore += progress.getOverallScore();
                     studentsWithScores++;
                 }
 
                 // Build student performance data
-                StudentPerformance sp = buildStudentPerformance(student, enrollment, course);
+                StudentPerformance sp = buildStudentPerformance(student, progress, course);
                 studentPerformances.add(sp);
             }
         }
@@ -128,11 +133,18 @@ public class AnalyticsServices {
 
         for (String studentId : studentIds) {
             Student student = JsonHandler.getStudent(studentId);
-            Enrollment enrollment = getEnrollmentForCourse(student, courseId);
 
-            if (enrollment != null) {
+            // Skip if student not found
+            if (student == null) {
+                continue;
+            }
+
+            CourseProgress progress = student.getCourseProgress(courseId);
+
+            if (progress != null) {
                 // Check completion
-                if (enrollment.getCompletedLessons().contains(lessonId)) {
+                String status = progress.getLessonStatus().get(lessonId);
+                if ("PASSED".equals(status)) {
                     studentsCompleted++;
                 }
 
@@ -186,12 +198,12 @@ public class AnalyticsServices {
             throw new IllegalArgumentException("Student or course not found");
         }
 
-        Enrollment enrollment = getEnrollmentForCourse(student, courseId);
-        if (enrollment == null) {
+        CourseProgress progress = student.getCourseProgress(courseId);
+        if (progress == null) {
             throw new IllegalArgumentException("Student not enrolled in course");
         }
 
-        return buildStudentPerformance(student, enrollment, course);
+        return buildStudentPerformance(student, progress, course);
     }
 
     /**
@@ -208,6 +220,12 @@ public class AnalyticsServices {
         Map<String, Integer> performanceMap = new HashMap<>();
 
         for (String studentId : course.getStudentIds()) {
+            // Skip if student not found
+            Student student = JsonHandler.getStudent(studentId);
+            if (student == null) {
+                continue;
+            }
+
             int bestScore = QuizServices.getBestScore(studentId, courseId, lessonId);
             if (bestScore >= 0) {
                 performanceMap.put(studentId, bestScore);
@@ -272,21 +290,30 @@ public class AnalyticsServices {
     /**
      * Build student performance object
      */
-    private static StudentPerformance buildStudentPerformance(Student student, Enrollment enrollment, Course course)
+    private static StudentPerformance buildStudentPerformance(Student student, CourseProgress progress, Course course)
             throws IOException {
         StudentPerformance sp = new StudentPerformance();
 
         sp.setStudentId(student.getUserId());
         sp.setStudentName(student.getName());
-        sp.setCompletedLessons(enrollment.getCompletedLessons().size());
+
+        // Calculate completed lessons from lesson status
+        int completedLessons = 0;
+        if (progress.getLessonStatus() != null) {
+            for (String status : progress.getLessonStatus().values()) {
+                if ("PASSED".equals(status)) {
+                    completedLessons++;
+                }
+            }
+        }
+        sp.setCompletedLessons(completedLessons);
         sp.setTotalLessons(course.getLessons().size());
 
-        // Parse completion percentage
-        String completionStr = enrollment.getCompletionPercentage().replace("%", "");
-        sp.setCompletionPercentage(Double.parseDouble(completionStr));
+        // Get completion percentage from CourseProgress
+        sp.setCompletionPercentage((double) progress.getProgressPercentage());
 
-        sp.setAverageScore(enrollment.getAverageScore());
-        sp.setTotalQuizAttempts(enrollment.getQuizResults().size());
+        sp.setAverageScore(progress.getOverallScore());
+        sp.setTotalQuizAttempts(progress.getQuizAttempts() != null ? progress.getQuizAttempts().size() : 0);
 
         // Build lesson progress
         ArrayList<LessonProgress> lessonProgressList = new ArrayList<>();
@@ -294,7 +321,7 @@ public class AnalyticsServices {
             LessonProgress lp = new LessonProgress();
             lp.setLessonId(lesson.getLessonId());
             lp.setLessonTitle(lesson.getTitle());
-            lp.setCompleted(enrollment.getCompletedLessons().contains(lesson.getLessonId()));
+            lp.setCompleted("PASSED".equals(progress.getLessonStatus().get(lesson.getLessonId())));
 
             ArrayList<QuizResult> results = QuizServices.getQuizResultsForLesson(
                     student.getUserId(), course.getCourseId(), lesson.getLessonId());
@@ -309,17 +336,5 @@ public class AnalyticsServices {
         sp.setLessonProgress(lessonProgressList);
 
         return sp;
-    }
-
-    /**
-     * Get enrollment for a specific course
-     */
-    private static Enrollment getEnrollmentForCourse(Student student, String courseId) {
-        for (Enrollment enrollment : student.getEnrollments()) {
-            if (enrollment.getCourseId().equals(courseId)) {
-                return enrollment;
-            }
-        }
-        return null;
     }
 }

@@ -63,41 +63,48 @@ public class SignupPanel extends javax.swing.JPanel {
         labelPassword1 = new javax.swing.JLabel();
         btnInstructor = new javax.swing.JRadioButton();
         btnStudent = new javax.swing.JRadioButton();
+        background = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnBack.setBackground(new java.awt.Color(0, 0, 0));
         btnBack.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        btnBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/btnBack.png"))); // NOI18N
         btnBack.setText("Back");
+        btnBack.setBorder(null);
         btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBackActionPerformed(evt);
             }
         });
+        add(btnBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 190, 50));
 
         labelTitle.setFont(new java.awt.Font("Lucida Console", 1, 48)); // NOI18N
+        labelTitle.setForeground(new java.awt.Color(51, 51, 51));
         labelTitle.setText("Sign up Page");
         labelTitle.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, null, java.awt.Color.darkGray, java.awt.Color.gray));
+        add(labelTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(318, 18, 376, -1));
 
         labelName.setBackground(new java.awt.Color(255, 255, 255));
         labelName.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        labelName.setForeground(new java.awt.Color(0, 0, 0));
         labelName.setText("Name");
+        add(labelName, new org.netbeans.lib.awtextra.AbsoluteConstraints(117, 111, -1, -1));
 
         labelEmail.setBackground(new java.awt.Color(255, 255, 255));
         labelEmail.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        labelEmail.setForeground(new java.awt.Color(0, 0, 0));
         labelEmail.setText("Email");
+        add(labelEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(125, 203, -1, -1));
 
         labelPassword.setBackground(new java.awt.Color(255, 255, 255));
         labelPassword.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        labelPassword.setForeground(new java.awt.Color(0, 0, 0));
         labelPassword.setText("Password");
+        add(labelPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(55, 298, -1, -1));
 
         labelPasswordConfirmation.setBackground(new java.awt.Color(255, 255, 255));
         labelPasswordConfirmation.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        labelPasswordConfirmation.setForeground(new java.awt.Color(0, 0, 0));
         labelPasswordConfirmation.setText("Re-enter Password");
+        add(labelPasswordConfirmation, new org.netbeans.lib.awtextra.AbsoluteConstraints(58, 407, -1, -1));
 
         btnSignup.setBackground(new java.awt.Color(0, 0, 0));
         btnSignup.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
@@ -107,6 +114,7 @@ public class SignupPanel extends javax.swing.JPanel {
                 btnSignupActionPerformed(evt);
             }
         });
+        add(btnSignup, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 618, 1268, 96));
 
         fieldName.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         fieldName.addActionListener(new java.awt.event.ActionListener() {
@@ -114,6 +122,7 @@ public class SignupPanel extends javax.swing.JPanel {
                 fieldNameActionPerformed(evt);
             }
         });
+        add(fieldName, new org.netbeans.lib.awtextra.AbsoluteConstraints(244, 106, 1030, -1));
 
         fieldEmail.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         fieldEmail.addActionListener(new java.awt.event.ActionListener() {
@@ -121,25 +130,30 @@ public class SignupPanel extends javax.swing.JPanel {
                 fieldEmailActionPerformed(evt);
             }
         });
+        add(fieldEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(244, 198, 1030, -1));
 
         fieldPasswordConfirmation.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        fieldPasswordConfirmation.setToolTipText("Password MUST be >= 8 Characters and MUST NOT contain whitespaces");
         fieldPasswordConfirmation.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 fieldPasswordConfirmationActionPerformed(evt);
             }
         });
+        add(fieldPasswordConfirmation, new org.netbeans.lib.awtextra.AbsoluteConstraints(244, 383, 1030, -1));
 
         fieldPassword.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        fieldPassword.setToolTipText("Password MUST be >= 8 Characters and MUST NOT contain whitespaces");
         fieldPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 fieldPasswordActionPerformed(evt);
             }
         });
+        add(fieldPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(244, 293, 1030, -1));
 
         labelPassword1.setBackground(new java.awt.Color(255, 255, 255));
         labelPassword1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        labelPassword1.setForeground(new java.awt.Color(0, 0, 0));
         labelPassword1.setText("Account Type");
+        add(labelPassword1, new org.netbeans.lib.awtextra.AbsoluteConstraints(63, 487, -1, -1));
 
         btnGrpAccountType.add(btnInstructor);
         btnInstructor.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -150,6 +164,7 @@ public class SignupPanel extends javax.swing.JPanel {
                 btnInstructorActionPerformed(evt);
             }
         });
+        add(btnInstructor, new org.netbeans.lib.awtextra.AbsoluteConstraints(244, 487, -1, -1));
 
         btnGrpAccountType.add(btnStudent);
         btnStudent.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -160,79 +175,13 @@ public class SignupPanel extends javax.swing.JPanel {
                 btnStudentActionPerformed(evt);
             }
         });
+        add(btnStudent, new org.netbeans.lib.awtextra.AbsoluteConstraints(449, 487, -1, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(labelPasswordConfirmation)
-                            .addComponent(labelPassword)
-                            .addComponent(labelEmail)
-                            .addComponent(labelName)
-                            .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(labelPassword1))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(101, 101, 101)
-                                        .addComponent(labelTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 376, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(27, 27, 27)
-                                        .addComponent(btnInstructor)
-                                        .addGap(69, 69, 69)
-                                        .addComponent(btnStudent)))
-                                .addGap(0, 580, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(27, 27, 27)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(fieldPasswordConfirmation, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(fieldPassword, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(fieldEmail, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(fieldName)))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(btnSignup, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnBack)
-                    .addComponent(labelTitle))
-                .addGap(33, 33, 33)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelName)
-                    .addComponent(fieldName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(34, 34, 34)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(fieldEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelEmail))
-                .addGap(37, 37, 37)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(fieldPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelPassword))
-                .addGap(32, 32, 32)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelPasswordConfirmation)
-                    .addComponent(fieldPasswordConfirmation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(46, 46, 46)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(labelPassword1)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnInstructor)
-                        .addComponent(btnStudent)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 94, Short.MAX_VALUE)
-                .addComponent(btnSignup, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
+        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/signUpBackground.jpg"))); // NOI18N
+        background.setMaximumSize(new java.awt.Dimension(1280, 720));
+        background.setMinimumSize(new java.awt.Dimension(1280, 720));
+        background.setPreferredSize(new java.awt.Dimension(1280, 720));
+        add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
@@ -319,6 +268,7 @@ public class SignupPanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel background;
     private javax.swing.JButton btnBack;
     private javax.swing.ButtonGroup btnGrpAccountType;
     private javax.swing.JRadioButton btnInstructor;

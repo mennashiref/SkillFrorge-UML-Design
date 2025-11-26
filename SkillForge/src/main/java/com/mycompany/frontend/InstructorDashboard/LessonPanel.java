@@ -20,7 +20,7 @@ import javax.swing.JTextArea;
  * @author HP
  */
 public class LessonPanel extends JPanel {
-    
+
     private InstructorDashboardFrame parent;
     private Lesson lesson;
     private Course course;
@@ -48,51 +48,40 @@ public class LessonPanel extends JPanel {
         JButton btnBack = new JButton("Back to Course");
         JButton btnEditLesson = new JButton("Edit Lesson");
         JButton btnDeleteLesson = new JButton("Delete Lesson");
+        JButton btnLessonAnalytics = new JButton("Lesson Analytics");
 
         buttonPanel.add(btnBack);
         buttonPanel.add(btnEditLesson);
         buttonPanel.add(btnDeleteLesson);
+        buttonPanel.add(btnLessonAnalytics);
 
         add(topPanel, BorderLayout.NORTH);
         add(new JScrollPane(txtContent), BorderLayout.CENTER);
         add(buttonPanel, BorderLayout.SOUTH);
 
-        btnBack.addActionListener(e -> parent.showCoursePanel(course));
+        btnBack.addActionListener(e -> parent.showCourseView(course));
 
-        btnEditLesson.addActionListener(e -> {
-            String newTitle = JOptionPane.showInputDialog(this, "Enter new lesson title:", lesson.getTitle());
-            if (newTitle != null && !newTitle.trim().isEmpty()) {
-                String newContent = JOptionPane.showInputDialog(this, "Enter new lesson content:", lesson.getContent());
-                if (newContent != null) {
-                    try {
-                        instructor.updateLesson(lesson.getLessonId(), newTitle, newContent);
-                        lesson.setTitle(newTitle);
-                        lesson.setContent(newContent);
-                        txtContent.setText(newContent);
-                        ((JLabel)topPanel.getComponent(0)).setText("Lesson: " + newTitle);
-                        JOptionPane.showMessageDialog(this, "Lesson updated successfully!");
-                    } catch (Exception ex) {
-                        JOptionPane.showMessageDialog(this, "Error updating lesson: " + ex.getMessage());
-                    }
-                }
-            }
-        });
+        btnEditLesson.addActionListener(e -> parent.showLessonFormPanel(course, lesson));
 
         btnDeleteLesson.addActionListener(e -> {
             int confirm = JOptionPane.showConfirmDialog(this,
-                "Are you sure you want to delete this lesson?",
-                "Confirm Delete",
-                JOptionPane.YES_NO_OPTION);
+                    "Are you sure you want to delete this lesson?",
+                    "Confirm Delete",
+                    JOptionPane.YES_NO_OPTION);
             if (confirm == JOptionPane.YES_OPTION) {
                 try {
                     instructor.deleteLesson(lesson.getLessonId());
                     JOptionPane.showMessageDialog(this, "Lesson deleted successfully!");
-                    parent.showCoursePanel(course);
+                    parent.showCourseView(course);
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(this, "Error deleting lesson: " + ex.getMessage());
                 }
             }
         });
+
+        btnLessonAnalytics.addActionListener(e -> {
+            parent.showLessonAnalytics(course.getCourseId(), lesson.getLessonId());
+        });
     }
-    
+
 }

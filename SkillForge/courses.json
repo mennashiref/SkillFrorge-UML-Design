@@ -4,255 +4,135 @@
     "instructorId" : "i1",
     "status" : "APPROVED",
     "studentIds" : [ "s1", "s2", "s3" ],
-    "title" : "Java Programming Fundamentals",
-    "description" : "Learn Java from basics to advanced concepts",
+    "title" : "Programming 2",
+    "description" : "يارب تخلص على خير :D",
     "lessons" : [ {
       "lessonId" : "L1",
-      "title" : "Introduction to Java",
-      "content" : "This lesson covers introduction to java in detail.",
+      "title" : "Threads",
+      "content" : "يوجع الميد",
+      "quizId" : "L1",
       "quiz" : {
-        "quizId" : "quiz_L1",
+        "quizId" : "L1",
         "questions" : [ {
-          "questionText" : "Question 1 for Introduction to Java?",
-          "options" : [ "Option A", "Option B", "Option C", "Option D" ],
-          "correctAnswerIndex" : 0
-        }, {
-          "questionText" : "Question 2 for Introduction to Java?",
-          "options" : [ "Option A", "Option B", "Option C", "Option D" ],
-          "correctAnswerIndex" : 1
-        }, {
-          "questionText" : "Question 3 for Introduction to Java?",
-          "options" : [ "Option A", "Option B", "Option C", "Option D" ],
-          "correctAnswerIndex" : 2
-        }, {
-          "questionText" : "Question 4 for Introduction to Java?",
-          "options" : [ "Option A", "Option B", "Option C", "Option D" ],
+          "questionText" : "ادينا حاجه بقى يأخى حرام عليك",
+          "options" : [ "وهوبا وهوبا", "الله يا بلادنا الله", "عبط ما بعد الثانية عشر", "احنا هنام" ],
           "correctAnswerIndex" : 3
         }, {
-          "questionText" : "Question 5 for Introduction to Java?",
-          "options" : [ "Option A", "Option B", "Option C", "Option D" ],
-          "correctAnswerIndex" : 0
+          "questionText" : "طب ايه هننام امتى ؟",
+          "options" : [ "نمت ننه", "اختار دى صح اسمع منى", "Encapsulation", "Compilation" ],
+          "correctAnswerIndex" : 1
         } ],
         "passingScore" : 70,
-        "averageScore" : 66.67
+        "averageScore" : 50.0,
+        "maxAttempts" : 3
       }
     }, {
       "lessonId" : "L2",
-      "title" : "Variables and Data Types",
-      "content" : "This lesson covers variables and data types in detail.",
+      "title" : "OOP",
+      "content" : "gbkhjilk;",
+      "quizId" : "L2",
       "quiz" : {
-        "quizId" : "quiz_L2",
+        "quizId" : "L2",
         "questions" : [ {
-          "questionText" : "Question 1 for Variables and Data Types?",
-          "options" : [ "Option A", "Option B", "Option C", "Option D" ],
-          "correctAnswerIndex" : 1
-        }, {
-          "questionText" : "Question 2 for Variables and Data Types?",
-          "options" : [ "Option A", "Option B", "Option C", "Option D" ],
+          "questionText" : "What is Java?",
+          "options" : [ "A coffee brand", "An island in Indonesia", "A programming language", "A type of computer" ],
           "correctAnswerIndex" : 2
         }, {
-          "questionText" : "Question 3 for Variables and Data Types?",
-          "options" : [ "Option A", "Option B", "Option C", "Option D" ],
-          "correctAnswerIndex" : 3
-        }, {
-          "questionText" : "Question 4 for Variables and Data Types?",
-          "options" : [ "Option A", "Option B", "Option C", "Option D" ],
-          "correctAnswerIndex" : 0
-        }, {
-          "questionText" : "Question 5 for Variables and Data Types?",
-          "options" : [ "Option A", "Option B", "Option C", "Option D" ],
-          "correctAnswerIndex" : 1
-        } ],
-        "passingScore" : 70,
-        "averageScore" : 80.0
-      }
-    }, {
-      "lessonId" : "L3",
-      "title" : "Control Flow Statements",
-      "content" : "This lesson covers if-else, loops, and switch statements.",
-      "quiz" : {
-        "quizId" : "quiz_L3",
-        "questions" : [ {
-          "questionText" : "Question 1 for Control Flow Statements?",
-          "options" : [ "Option A", "Option B", "Option C", "Option D" ],
-          "correctAnswerIndex" : 2
-        }, {
-          "questionText" : "Question 2 for Control Flow Statements?",
-          "options" : [ "Option A", "Option B", "Option C", "Option D" ],
-          "correctAnswerIndex" : 3
-        }, {
-          "questionText" : "Question 3 for Control Flow Statements?",
-          "options" : [ "Option A", "Option B", "Option C", "Option D" ],
-          "correctAnswerIndex" : 0
-        }, {
-          "questionText" : "Question 4 for Control Flow Statements?",
-          "options" : [ "Option A", "Option B", "Option C", "Option D" ],
-          "correctAnswerIndex" : 1
-        }, {
-          "questionText" : "Question 5 for Control Flow Statements?",
-          "options" : [ "Option A", "Option B", "Option C", "Option D" ],
+          "questionText" : "Which company created Java?",
+          "options" : [ "Microsoft", "Apple", "Sun Microsystems", "Google" ],
           "correctAnswerIndex" : 2
         } ],
         "passingScore" : 70,
-        "averageScore" : 80.0
-      }
-    }, {
-      "lessonId" : "L4",
-      "title" : "Methods and Functions",
-      "content" : "This lesson covers method declaration and usage.",
-      "quiz" : {
-        "quizId" : "quiz_L4",
-        "questions" : [ {
-          "questionText" : "Question 1 for Methods and Functions?",
-          "options" : [ "Option A", "Option B", "Option C", "Option D" ],
-          "correctAnswerIndex" : 3
-        }, {
-          "questionText" : "Question 2 for Methods and Functions?",
-          "options" : [ "Option A", "Option B", "Option C", "Option D" ],
-          "correctAnswerIndex" : 0
-        }, {
-          "questionText" : "Question 3 for Methods and Functions?",
-          "options" : [ "Option A", "Option B", "Option C", "Option D" ],
-          "correctAnswerIndex" : 1
-        }, {
-          "questionText" : "Question 4 for Methods and Functions?",
-          "options" : [ "Option A", "Option B", "Option C", "Option D" ],
-          "correctAnswerIndex" : 2
-        }, {
-          "questionText" : "Question 5 for Methods and Functions?",
-          "options" : [ "Option A", "Option B", "Option C", "Option D" ],
-          "correctAnswerIndex" : 3
-        } ],
-        "passingScore" : 70,
-        "averageScore" : 80.0
+        "averageScore" : 75.0,
+        "maxAttempts" : 3
       }
     } ]
   }, {
     "courseId" : "C2",
     "instructorId" : "i1",
+    "status" : "REJECTED",
+    "studentIds" : [ ],
+    "title" : "programming one",
+    "description" : "huji;okpl':",
+    "lessons" : [ {
+      "lessonId" : "L3",
+      "title" : "rctdhfkgyu./kjl;,",
+      "content" : "vrs;giltobhlgtfhsf",
+      "quizId" : null,
+      "quiz" : null
+    }, {
+      "lessonId" : "L4",
+      "title" : "fuilbgfdo;lss",
+      "content" : "dfgluifbl.tkfb",
+      "quizId" : null,
+      "quiz" : null
+    } ]
+  }, {
+    "courseId" : "C3",
+    "instructorId" : "i2",
     "status" : "APPROVED",
-    "studentIds" : [ "s1", "s3" ],
-    "title" : "Python for Data Science",
-    "description" : "Master Python for data analysis and machine learning",
+    "studentIds" : [ "s2", "s3" ],
+    "title" : "java",
+    "description" : "sadfdasgv",
     "lessons" : [ {
       "lessonId" : "L5",
-      "title" : "Python Basics",
-      "content" : "This lesson covers python basics in detail.",
+      "title" : "nosh",
+      "content" : "asdgfrwsagr",
+      "quizId" : "L5",
       "quiz" : {
-        "quizId" : "quiz_L5",
+        "quizId" : "L5",
         "questions" : [ {
-          "questionText" : "Question 1 for Python Basics?",
-          "options" : [ "Option A", "Option B", "Option C", "Option D" ],
+          "questionText" : "afgtrweq",
+          "options" : [ "wtr", "rwtrwe", "trwet", "wrtwer" ],
           "correctAnswerIndex" : 0
         }, {
-          "questionText" : "Question 2 for Python Basics?",
-          "options" : [ "Option A", "Option B", "Option C", "Option D" ],
-          "correctAnswerIndex" : 1
-        }, {
-          "questionText" : "Question 3 for Python Basics?",
-          "options" : [ "Option A", "Option B", "Option C", "Option D" ],
-          "correctAnswerIndex" : 2
-        }, {
-          "questionText" : "Question 4 for Python Basics?",
-          "options" : [ "Option A", "Option B", "Option C", "Option D" ],
-          "correctAnswerIndex" : 3
-        }, {
-          "questionText" : "Question 5 for Python Basics?",
-          "options" : [ "Option A", "Option B", "Option C", "Option D" ],
+          "questionText" : "wert",
+          "options" : [ "rewqr", "rewqr", "qwerqwe", "qwerr" ],
           "correctAnswerIndex" : 0
         } ],
         "passingScore" : 70,
-        "averageScore" : 70.0
+        "averageScore" : 75.0,
+        "maxAttempts" : 3
       }
     }, {
       "lessonId" : "L6",
-      "title" : "NumPy and Pandas",
-      "content" : "This lesson covers numpy and pandas in detail.",
+      "title" : "nosh 2",
+      "content" : "fsdatwrs",
+      "quizId" : "L6",
       "quiz" : {
-        "quizId" : "quiz_L6",
+        "quizId" : "L6",
         "questions" : [ {
-          "questionText" : "Question 1 for NumPy and Pandas?",
-          "options" : [ "Option A", "Option B", "Option C", "Option D" ],
-          "correctAnswerIndex" : 1
-        }, {
-          "questionText" : "Question 2 for NumPy and Pandas?",
-          "options" : [ "Option A", "Option B", "Option C", "Option D" ],
-          "correctAnswerIndex" : 2
-        }, {
-          "questionText" : "Question 3 for NumPy and Pandas?",
-          "options" : [ "Option A", "Option B", "Option C", "Option D" ],
-          "correctAnswerIndex" : 3
-        }, {
-          "questionText" : "Question 4 for NumPy and Pandas?",
-          "options" : [ "Option A", "Option B", "Option C", "Option D" ],
+          "questionText" : "ewqrtqew",
+          "options" : [ "weqrqwe", "qwer", "weqrewq", "rweqrqwer" ],
           "correctAnswerIndex" : 0
-        }, {
-          "questionText" : "Question 5 for NumPy and Pandas?",
-          "options" : [ "Option A", "Option B", "Option C", "Option D" ],
-          "correctAnswerIndex" : 1
         } ],
         "passingScore" : 70,
-        "averageScore" : 80.0
+        "averageScore" : 0.0,
+        "maxAttempts" : 3
       }
-    }, {
+    } ]
+  }, {
+    "courseId" : "C4",
+    "instructorId" : "i2",
+    "status" : "APPROVED",
+    "studentIds" : [ "s2", "s3" ],
+    "title" : "asdffgtwresa",
+    "description" : "rfweqtwerq",
+    "lessons" : [ {
       "lessonId" : "L7",
-      "title" : "Data Visualization",
-      "content" : "This lesson covers matplotlib and seaborn.",
+      "title" : "fgyutjty",
+      "content" : "uyrtfu",
+      "quizId" : "L7",
       "quiz" : {
-        "quizId" : "quiz_L7",
+        "quizId" : "L7",
         "questions" : [ {
-          "questionText" : "Question 1 for Data Visualization?",
-          "options" : [ "Option A", "Option B", "Option C", "Option D" ],
-          "correctAnswerIndex" : 2
-        }, {
-          "questionText" : "Question 2 for Data Visualization?",
-          "options" : [ "Option A", "Option B", "Option C", "Option D" ],
-          "correctAnswerIndex" : 3
-        }, {
-          "questionText" : "Question 3 for Data Visualization?",
-          "options" : [ "Option A", "Option B", "Option C", "Option D" ],
+          "questionText" : "wseqadtrewq",
+          "options" : [ "weqrtewq", "tweqsdtf", "ewqrtewqt", "ewqtrewqtr" ],
           "correctAnswerIndex" : 0
-        }, {
-          "questionText" : "Question 4 for Data Visualization?",
-          "options" : [ "Option A", "Option B", "Option C", "Option D" ],
-          "correctAnswerIndex" : 1
-        }, {
-          "questionText" : "Question 5 for Data Visualization?",
-          "options" : [ "Option A", "Option B", "Option C", "Option D" ],
-          "correctAnswerIndex" : 2
         } ],
         "passingScore" : 70,
-        "averageScore" : 0.0
-      }
-    }, {
-      "lessonId" : "L8",
-      "title" : "Machine Learning Intro",
-      "content" : "This lesson covers basic ML concepts.",
-      "quiz" : {
-        "quizId" : "quiz_L8",
-        "questions" : [ {
-          "questionText" : "Question 1 for Machine Learning Intro?",
-          "options" : [ "Option A", "Option B", "Option C", "Option D" ],
-          "correctAnswerIndex" : 3
-        }, {
-          "questionText" : "Question 2 for Machine Learning Intro?",
-          "options" : [ "Option A", "Option B", "Option C", "Option D" ],
-          "correctAnswerIndex" : 0
-        }, {
-          "questionText" : "Question 3 for Machine Learning Intro?",
-          "options" : [ "Option A", "Option B", "Option C", "Option D" ],
-          "correctAnswerIndex" : 1
-        }, {
-          "questionText" : "Question 4 for Machine Learning Intro?",
-          "options" : [ "Option A", "Option B", "Option C", "Option D" ],
-          "correctAnswerIndex" : 2
-        }, {
-          "questionText" : "Question 5 for Machine Learning Intro?",
-          "options" : [ "Option A", "Option B", "Option C", "Option D" ],
-          "correctAnswerIndex" : 3
-        } ],
-        "passingScore" : 70,
-        "averageScore" : 0.0
+        "averageScore" : 50.0,
+        "maxAttempts" : 3
       }
     } ]
   } ]

@@ -51,7 +51,7 @@ public class MainPanel extends javax.swing.JPanel {
         BtnLogin.setForeground(new java.awt.Color(51, 51, 51));
         BtnLogin.setText("Login");
         BtnLogin.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        BtnLogin.setMargin(new java.awt.Insets(3, 14, 3, 14));
+        BtnLogin.setMargin(new java.awt.Insets(6, 14, 3, 14));
         BtnLogin.setOpaque(true);
         BtnLogin.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -72,7 +72,7 @@ public class MainPanel extends javax.swing.JPanel {
         BtnSignup.setForeground(new java.awt.Color(0, 0, 0));
         BtnSignup.setText("Sign up");
         BtnSignup.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        BtnSignup.setMargin(new java.awt.Insets(3, 14, 3, 14));
+        BtnSignup.setMargin(new java.awt.Insets(5, 14, 3, 14));
         BtnSignup.setOpaque(true);
         BtnSignup.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {

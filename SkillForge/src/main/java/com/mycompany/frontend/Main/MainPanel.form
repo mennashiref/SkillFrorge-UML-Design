@@ -85,7 +85,7 @@
           </Border>
         </Property>
         <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-          <Insets value="[3, 14, 3, 14]"/>
+          <Insets value="[6, 14, 3, 14]"/>
         </Property>
         <Property name="opaque" type="boolean" value="true"/>
       </Properties>
@@ -113,7 +113,7 @@
           </Border>
         </Property>
         <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-          <Insets value="[3, 14, 3, 14]"/>
+          <Insets value="[5, 14, 3, 14]"/>
         </Property>
         <Property name="opaque" type="boolean" value="true"/>
       </Properties>

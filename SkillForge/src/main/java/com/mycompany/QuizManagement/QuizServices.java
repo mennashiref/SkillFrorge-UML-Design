@@ -1,26 +1,25 @@
 package com.mycompany.QuizManagement;
 
 import com.mycompany.CourseManagement.Course;
+import com.mycompany.CourseManagement.CourseProgress;
 import com.mycompany.CourseManagement.CourseServices;
 import com.mycompany.CourseManagement.Lesson;
 import com.mycompany.JsonHandler.JsonHandler;
-import com.mycompany.UserAccountManagement.Enrollment;
 import com.mycompany.UserAccountManagement.Student;
 import java.io.IOException;
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Service class for Quiz operations
  */
 public class QuizServices {
 
+    private static final int MAX_ATTEMPTS = 3;
+
     /**
      * Create a quiz with questions
-     * 
-     * @param quizId
-     * @param questions    list of questions
-     * @param passingScore minimum score to pass (percentage)
-     * @return created Quiz object
      */
     public static Quiz createQuiz(String quizId, ArrayList<Question> questions, int passingScore) {
         return new Quiz(quizId, questions, passingScore);
@@ -28,11 +27,6 @@ public class QuizServices {
 
     /**
      * Add quiz to a lesson
-     * 
-     * @param courseId the course containing the lesson
-     * @param lessonId the lesson to add quiz
-     * @param quiz     the quiz to add
-     * @throws IOException
      */
     public static void addQuizToLesson(String courseId, String lessonId, Quiz quiz) throws IOException {
         Lesson lesson = CourseServices.findLessonById(courseId, lessonId);
@@ -45,17 +39,38 @@ public class QuizServices {
     }
 
     /**
+     * -------------------------------
+     * NEW: Get remaining attempts
+     * -------------------------------
+     */
+    public static int getRemainingAttempts(String studentId, String courseId, String lessonId) {
+        Student student = JsonHandler.getStudent(studentId);
+        if (student == null) return MAX_ATTEMPTS;
+
+        CourseProgress progress = student.getCourseProgress(courseId);
+        if (progress == null) return MAX_ATTEMPTS;
+
+        int attempts = 0;
+        for (QuizAttempt attempt : progress.getQuizAttempts()) {
+            if (attempt.getLessonId().equals(lessonId)) {
+                attempts++;
+            }
+        }
+
+        return Math.max(0, MAX_ATTEMPTS - attempts);
+    }
+
+    /**
      * Submit quiz answers and calculate score
-     * 
-     * @param studentId      the student taking the quiz
-     * @param courseId       the course containing the lesson
-     * @param lessonId       the lesson with the quiz
-     * @param studentAnswers list of answer indices selected by student
-     * @return QuizResult with score and pass/fail status
-     * @throws IOException
      */
     public static QuizResult submitQuiz(String studentId, String courseId, String lessonId,
             ArrayList<Integer> studentAnswers) throws IOException {
+
+        // ❗❗ BEFORE ANYTHING — check attempts
+        int remaining = getRemainingAttempts(studentId, courseId, lessonId);
+        if (remaining <= 0) {
+            throw new IllegalStateException("No remaining quiz attempts. Maximum attempts reached.");
+        }
 
         // Get the lesson and its quiz
         Lesson lesson = CourseServices.findLessonById(courseId, lessonId);
@@ -78,70 +93,77 @@ public class QuizServices {
         int scorePercentage = (correctAnswers * 100) / questions.size();
         boolean passed = scorePercentage >= quiz.getPassingScore();
 
-        // Get student and find their enrollment
+        // Get student
         Student student = JsonHandler.getStudent(studentId);
-        Enrollment enrollment = null;
-
-        for (Enrollment enr : student.getEnrollments()) {
-            if (enr.getCourseId().equals(courseId)) {
-                enrollment = enr;
-                break;
-            }
+        if (student == null) {
+            throw new IllegalArgumentException("Student not found");
         }
 
-        if (enrollment == null) {
+        // Get or create course progress
+        CourseProgress progress = student.getCourseProgress(courseId);
+        if (progress == null) {
             throw new IllegalArgumentException("Student not enrolled in course");
         }
 
         // Determine attempt number
         int attemptNumber = 1;
-        for (QuizResult result : enrollment.getQuizResults()) {
-            if (result.getLessonId().equals(lessonId)) {
+        List<QuizAttempt> attempts = progress.getQuizAttempts();
+        for (QuizAttempt attempt : attempts) {
+            if (attempt.getLessonId().equals(lessonId)) {
                 attemptNumber++;
             }
         }
 
-        // Create quiz result
-        QuizResult result = new QuizResult(lessonId, scorePercentage, passed, attemptNumber, studentAnswers);
-        enrollment.addQuizResult(result);
+        // Create attempt
+        QuizAttempt quizAttempt = new QuizAttempt();
+        quizAttempt.setQuizId(quiz.getQuizId());
+        quizAttempt.setLessonId(lessonId);
+        quizAttempt.setCourseId(courseId);
+        quizAttempt.setScorePercent(scorePercentage);
+        quizAttempt.setPassed(passed);
+        quizAttempt.setAttemptTime(Instant.now().toString());
 
-        // If passed, mark lesson as completed
-        if (passed && !enrollment.getCompletedLessons().contains(lessonId)) {
-            enrollment.getCompletedLessons().add(lessonId);
-        }
+        // Add to course progress
+        progress.addQuizAttempt(quizAttempt);
 
-        // Update completion percentage and average score
-        updateEnrollmentStats(enrollment, courseId);
-
-        // Save changes
+        // Save user progress
         JsonHandler.saveUsers();
 
-        // Update quiz average score
+        // Update quiz avg score
         updateQuizAverageScore(courseId, lessonId);
 
+        // Create result object
+        QuizResult result = new QuizResult(lessonId, scorePercentage, passed, attemptNumber, studentAnswers);
         return result;
     }
 
     /**
      * Get all quiz results for a student in a specific lesson
-     * 
-     * @param studentId the student ID
-     * @param courseId  the course ID
-     * @param lessonId  the lesson ID
-     * @return list of quiz results
      */
     public static ArrayList<QuizResult> getQuizResultsForLesson(String studentId, String courseId, String lessonId) {
         Student student = JsonHandler.getStudent(studentId);
         ArrayList<QuizResult> results = new ArrayList<>();
 
-        for (Enrollment enrollment : student.getEnrollments()) {
-            if (enrollment.getCourseId().equals(courseId)) {
-                for (QuizResult result : enrollment.getQuizResults()) {
-                    if (result.getLessonId().equals(lessonId)) {
-                        results.add(result);
-                    }
-                }
-                break;
+        if (student == null) {
+            return results;
+        }
+
+        CourseProgress progress = student.getCourseProgress(courseId);
+        if (progress == null) {
+            return results;
+        }
+
+        int attemptNum = 1;
+        for (QuizAttempt attempt : progress.getQuizAttempts()) {
+            if (attempt.getLessonId().equals(lessonId)) {
+                QuizResult result = new QuizResult(
+                        lessonId,
+                        attempt.getScorePercent(),
+                        attempt.isPassed(),
+                        attemptNum++,
+                        new ArrayList<>()
+                );
+                results.add(result);
             }
         }
 
@@ -149,20 +171,23 @@ public class QuizServices {
     }
 
     /**
-     * Get the best quiz score for a lesson
-     * 
-     * @param studentId the student ID
-     * @param courseId  the course ID
-     * @param lessonId  the lesson ID
-     * @return best score or -1 if no attempts
+     * Get best quiz score
      */
     public static int getBestScore(String studentId, String courseId, String lessonId) {
-        ArrayList<QuizResult> results = getQuizResultsForLesson(studentId, courseId, lessonId);
-        int bestScore = -1;
+        Student student = JsonHandler.getStudent(studentId);
+        if (student == null) {
+            return -1;
+        }
 
-        for (QuizResult result : results) {
-            if (result.getScore() > bestScore) {
-                bestScore = result.getScore();
+        CourseProgress progress = student.getCourseProgress(courseId);
+        if (progress == null) {
+            return -1;
+        }
+
+        int bestScore = -1;
+        for (QuizAttempt attempt : progress.getQuizAttempts()) {
+            if (attempt.getLessonId().equals(lessonId)) {
+                bestScore = Math.max(bestScore, attempt.getScorePercent());
             }
         }
 
@@ -170,84 +195,25 @@ public class QuizServices {
     }
 
     /**
-     * Check if student has passed the quiz for a lesson
-     * 
-     * @param studentId the student ID
-     * @param courseId  the course ID
-     * @param lessonId  the lesson ID
-     * @return true if passed, false otherwise
+     * Check if student passed quiz
      */
     public static boolean hasPassedQuiz(String studentId, String courseId, String lessonId) {
-        ArrayList<QuizResult> results = getQuizResultsForLesson(studentId, courseId, lessonId);
-
-        for (QuizResult result : results) {
-            if (result.isPassed()) {
-                return true;
-            }
+        Student student = JsonHandler.getStudent(studentId);
+        if (student == null) {
+            return false;
         }
 
-        return false;
+        CourseProgress progress = student.getCourseProgress(courseId);
+        if (progress == null) {
+            return false;
+        }
+
+        String status = progress.getLessonStatus().get(lessonId);
+        return "PASSED".equals(status);
     }
 
     /**
-     * Update enrollment statistics (completion and average score)
-     * 
-     * @param enrollment the enrollment to update
-     * @param courseId   the course ID
-     * @throws IOException
-     */
-    private static void updateEnrollmentStats(Enrollment enrollment, String courseId) throws IOException {
-        Course course = CourseServices.findCourseById(courseId);
-
-        // Calculate completion percentage
-        int totalLessons = course.getLessons().size();
-        int completedLessons = enrollment.getCompletedLessons().size();
-
-        if (totalLessons > 0) {
-            int completionPercentage = (completedLessons * 100) / totalLessons;
-            enrollment.setCompletionPercentage(completionPercentage + "%");
-        }
-
-        // Calculate average score across all quizzes (using best attempt for each
-        // lesson)
-        ArrayList<QuizResult> results = enrollment.getQuizResults();
-        if (!results.isEmpty()) {
-            // Group by lesson and get best score for each
-            ArrayList<String> processedLessons = new ArrayList<>();
-            int totalScore = 0;
-            int quizCount = 0;
-
-            for (QuizResult result : results) {
-                String lessonId = result.getLessonId();
-                if (!processedLessons.contains(lessonId)) {
-                    processedLessons.add(lessonId);
-
-                    // Find best score for this lesson
-                    int bestScore = result.getScore();
-                    for (QuizResult r : results) {
-                        if (r.getLessonId().equals(lessonId) && r.getScore() > bestScore) {
-                            bestScore = r.getScore();
-                        }
-                    }
-
-                    totalScore += bestScore;
-                    quizCount++;
-                }
-            }
-
-            if (quizCount > 0) {
-                double averageScore = (double) totalScore / quizCount;
-                enrollment.setAverageScore(Math.round(averageScore * 100.0) / 100.0);
-            }
-        }
-    }
-
-    /**
-     * Update the average score for a quiz across all students
-     * 
-     * @param courseId the course ID
-     * @param lessonId the lesson ID with the quiz
-     * @throws IOException
+     * Update quiz average score
      */
     private static void updateQuizAverageScore(String courseId, String lessonId) throws IOException {
         Course course = CourseServices.findCourseById(courseId);
@@ -257,12 +223,10 @@ public class QuizServices {
             return;
         }
 
-        // Get all enrolled students
         ArrayList<String> studentIds = course.getStudentIds();
         int totalScore = 0;
         int studentCount = 0;
 
-        // Calculate average across all students (best score for each)
         for (String studentId : studentIds) {
             int bestScore = getBestScore(studentId, courseId, lessonId);
             if (bestScore >= 0) {

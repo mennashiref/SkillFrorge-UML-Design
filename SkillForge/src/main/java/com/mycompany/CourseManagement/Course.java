@@ -18,6 +18,7 @@ public class Course {
     private String instructorId;
     private Status status;
 
+    
     @JsonProperty(defaultValue = "[]")
     private ArrayList<String> studentIds;
 

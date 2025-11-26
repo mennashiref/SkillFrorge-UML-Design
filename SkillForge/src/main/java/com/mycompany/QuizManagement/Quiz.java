@@ -13,14 +13,17 @@ public class Quiz {
     @JsonProperty(defaultValue = "[]")
     private ArrayList<Question> questions;
 
-    private int passingScore; // Percentage needed to pass
+    private int passingScore; 
 
     private double averageScore;
+
+    private int maxAttempts = 3; 
 
     public Quiz() {
         this.questions = new ArrayList<>();
         this.passingScore = 70; // Default passing score
         this.averageScore = 0.0;
+        this.maxAttempts = 3;
     }
 
     public Quiz(String quizId, ArrayList<Question> questions, int passingScore) {
@@ -28,6 +31,7 @@ public class Quiz {
         this.questions = questions != null ? questions : new ArrayList<>();
         this.passingScore = passingScore;
         this.averageScore = 0.0;
+        this.maxAttempts = 3;
     }
 
     public String getQuizId() {
@@ -65,6 +69,15 @@ public class Quiz {
         this.averageScore = averageScore;
     }
 
+    // إضافة getter و setter لخاصية maxAttempts
+    public int getMaxAttempts() {
+        return maxAttempts;
+    }
+
+    public void setMaxAttempts(int maxAttempts) {
+        this.maxAttempts = maxAttempts;
+    }
+
     public void addQuestion(Question question) {
         if (questions == null) {
             questions = new ArrayList<>();
@@ -76,7 +89,7 @@ public class Quiz {
 
     @Override
     public String toString() {
-        return String.format("Quiz[ID=%s, Questions=%d, PassingScore=%d%%]",
-                quizId, questions.size(), passingScore);
+        return String.format("Quiz[ID=%s, Questions=%d, PassingScore=%d%%, MaxAttempts=%d]",
+                quizId, questions.size(), passingScore, maxAttempts);
     }
 }
